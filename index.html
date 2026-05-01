@@ -4,805 +4,667 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Digital Toolkit</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=Instrument+Sans:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&display=swap" rel="stylesheet">
 <style>
-  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:#08080e;--surface:#10101a;--border:rgba(255,255,255,.07);--border-h:rgba(255,255,255,.18);
+  --text:#eeedf5;--muted:#6b6a80;
+  --a1:#7c6fff;--a2:#ff6b9d;--a3:#00d4a8;--a4:#ffb84d;--a5:#4fc3f7;--a6:#a78bfa;
+}
+html{scroll-behavior:smooth;}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden;}
+body::before{content:'';position:fixed;inset:0;background-image:linear-gradient(rgba(124,111,255,.025) 1px,transparent 1px),linear-gradient(90deg,rgba(124,111,255,.025) 1px,transparent 1px);background-size:70px 70px;pointer-events:none;z-index:0;}
+.orb{position:fixed;border-radius:50%;filter:blur(130px);pointer-events:none;z-index:0;animation:drift 22s ease-in-out infinite;}
+.o1{width:600px;height:600px;background:rgba(124,111,255,.09);top:-250px;left:-150px;}
+.o2{width:450px;height:450px;background:rgba(255,107,157,.06);bottom:-150px;right:-120px;animation-delay:-8s;}
+.o3{width:350px;height:350px;background:rgba(0,212,168,.06);top:40%;left:55%;animation-delay:-16s;}
+@keyframes drift{0%,100%{transform:translate(0,0)}33%{transform:translate(25px,-20px)}66%{transform:translate(-20px,28px)}}
+.wrap{max-width:1120px;margin:0 auto;padding:0 1.5rem;position:relative;z-index:1;}
 
-  :root {
-    --bg: #0a0a0f;
-    --surface: #111118;
-    --surface2: #18181f;
-    --border: rgba(255,255,255,0.06);
-    --border-hover: rgba(255,255,255,0.15);
-    --text: #f0eff5;
-    --muted: #6b6a7a;
-    --accent1: #7c6fff;
-    --accent2: #ff6b9d;
-    --accent3: #00d9b1;
-    --accent4: #ffb347;
-    --accent5: #4fc3f7;
-  }
+/* HEADER */
+header{padding:3.5rem 0 2.5rem;text-align:center;}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-family:'Syne',sans-serif;font-size:11px;font-weight:600;letter-spacing:.2em;text-transform:uppercase;color:var(--a1);background:rgba(124,111,255,.1);border:1px solid rgba(124,111,255,.22);padding:6px 14px;border-radius:100px;margin-bottom:1.4rem;animation:fadeUp .5s ease both;}
+.eyebrow::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--a1);animation:blink 2s ease infinite;}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+h1{font-family:'Syne',sans-serif;font-size:clamp(2.6rem,5.5vw,4.6rem);font-weight:800;line-height:1.02;letter-spacing:-.03em;animation:fadeUp .5s .08s ease both;}
+h1 em{font-style:normal;background:linear-gradient(130deg,var(--a1),var(--a2));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.sub{margin-top:.9rem;font-size:.95rem;color:var(--muted);max-width:460px;margin-inline:auto;line-height:1.7;animation:fadeUp .5s .16s ease both;}
+@keyframes fadeUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
 
-  html { scroll-behavior: smooth; }
+/* STATS */
+.stats{display:flex;gap:2.5rem;justify-content:center;flex-wrap:wrap;margin:2rem 0 2.5rem;animation:fadeUp .5s .22s ease both;}
+.stat{text-align:center;}
+.stat-n{font-family:'Syne',sans-serif;font-size:1.7rem;font-weight:800;background:linear-gradient(130deg,var(--a1),var(--a3));-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.stat-l{font-size:10px;color:var(--muted);margin-top:2px;letter-spacing:.1em;text-transform:uppercase;}
 
-  body {
-    font-family: 'Instrument Sans', sans-serif;
-    background: var(--bg);
-    color: var(--text);
-    min-height: 100vh;
-    overflow-x: hidden;
-  }
+/* FILTER */
+.filter-bar{display:flex;gap:7px;flex-wrap:wrap;justify-content:center;margin:0 0 2.8rem;animation:fadeUp .5s .28s ease both;}
+.fb{font-family:'Syne',sans-serif;font-size:11px;font-weight:700;padding:7px 15px;border-radius:100px;border:1px solid var(--border);background:transparent;color:var(--muted);cursor:pointer;transition:all .2s;letter-spacing:.06em;}
+.fb:hover{border-color:var(--border-h);color:var(--text);}
+.fb.on{background:var(--a1);border-color:var(--a1);color:#fff;}
 
-  /* bg grid */
-  body::before {
-    content: '';
-    position: fixed;
-    inset: 0;
-    background-image:
-      linear-gradient(rgba(124,111,255,0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(124,111,255,0.03) 1px, transparent 1px);
-    background-size: 60px 60px;
-    pointer-events: none;
-    z-index: 0;
-  }
+/* CATEGORY */
+.cat{margin-bottom:3rem;}
+.cat-hd{display:flex;align-items:center;gap:10px;margin-bottom:1.1rem;}
+.cat-nm{font-family:'Syne',sans-serif;font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);}
+.cat-ln{flex:1;height:1px;background:var(--border);}
+.cat-ct{font-size:10px;color:var(--muted);background:rgba(255,255,255,.04);padding:2px 8px;border-radius:100px;border:1px solid var(--border);}
 
-  /* glow orbs */
-  .orb {
-    position: fixed;
-    border-radius: 50%;
-    filter: blur(120px);
-    pointer-events: none;
-    z-index: 0;
-    animation: drift 20s ease-in-out infinite;
-  }
-  .orb1 { width: 500px; height: 500px; background: rgba(124,111,255,0.12); top: -200px; left: -100px; animation-delay: 0s; }
-  .orb2 { width: 400px; height: 400px; background: rgba(255,107,157,0.08); bottom: -100px; right: -100px; animation-delay: -7s; }
-  .orb3 { width: 300px; height: 300px; background: rgba(0,217,177,0.07); top: 50%; left: 50%; animation-delay: -14s; }
+/* GRID */
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:12px;}
 
-  @keyframes drift {
-    0%, 100% { transform: translate(0, 0); }
-    33% { transform: translate(30px, -20px); }
-    66% { transform: translate(-20px, 30px); }
-  }
+/* CARD */
+.card{position:relative;background:var(--surface);border:1px solid var(--border);border-radius:18px;overflow:hidden;text-decoration:none;color:var(--text);display:flex;flex-direction:column;transition:border-color .25s,transform .22s,box-shadow .25s;animation:cardIn .45s ease both;}
+.card:hover{border-color:var(--ca,var(--a1));transform:translateY(-4px);box-shadow:0 12px 40px rgba(0,0,0,.35);}
+.card::after{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--ca,var(--a1));opacity:0;transition:opacity .25s;}
+.card:hover::after{opacity:1;}
+@keyframes cardIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
 
-  .container { max-width: 1100px; margin: 0 auto; padding: 0 2rem; position: relative; z-index: 1; }
+.ctop{display:flex;align-items:flex-start;justify-content:space-between;padding:1.2rem 1.3rem .6rem;}
+.logo{width:44px;height:44px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:23px;background:var(--lb,rgba(124,111,255,.12));border:1px solid var(--lbo,rgba(124,111,255,.22));flex-shrink:0;}
+.badges{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.badge{font-size:9.5px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:.07em;padding:3px 8px;border-radius:100px;}
+.bf{background:rgba(0,212,168,.12);color:var(--a3);border:1px solid rgba(0,212,168,.22);}
+.bfm{background:rgba(255,184,77,.12);color:var(--a4);border:1px solid rgba(255,184,77,.22);}
+.bp{background:rgba(255,107,157,.12);color:var(--a2);border:1px solid rgba(255,107,157,.22);}
 
-  /* ── HEADER ── */
-  header {
-    padding: 4rem 0 3rem;
-    text-align: center;
-  }
+.cbody{padding:0 1.3rem;}
+.tagline{font-size:10.5px;font-weight:600;letter-spacing:.07em;color:var(--ca,var(--a1));text-transform:uppercase;font-family:'Syne',sans-serif;margin-bottom:4px;}
+.cname{font-family:'Syne',sans-serif;font-size:1.05rem;font-weight:700;margin-bottom:5px;}
+.cdesc{font-size:12.5px;line-height:1.6;color:rgba(238,237,245,.55);}
 
-  .eyebrow {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-family: 'Syne', sans-serif;
-    font-size: 11px; font-weight: 600; letter-spacing: 0.2em;
-    text-transform: uppercase; color: var(--accent1);
-    background: rgba(124,111,255,0.1);
-    border: 1px solid rgba(124,111,255,0.2);
-    padding: 6px 14px; border-radius: 100px;
-    margin-bottom: 1.5rem;
-    animation: fadeUp 0.6s ease both;
-  }
-  .eyebrow::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent1); animation: pulse 2s ease infinite; }
-  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.5;transform:scale(0.7)} }
+/* INFO GRID */
+.info-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;padding:.9rem 1.3rem;}
+.info-box{background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:10px;padding:8px 10px;}
+.info-lbl{font-size:9px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);margin-bottom:3px;}
+.info-val{font-size:11.5px;font-weight:500;color:var(--text);line-height:1.4;}
+.info-val small{font-size:10px;color:var(--muted);}
 
-  h1 {
-    font-family: 'Syne', sans-serif;
-    font-size: clamp(2.8rem, 6vw, 5rem);
-    font-weight: 800;
-    line-height: 1;
-    letter-spacing: -0.03em;
-    animation: fadeUp 0.6s 0.1s ease both;
-  }
-  h1 span {
-    background: linear-gradient(135deg, var(--accent1) 0%, var(--accent2) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-  }
+/* PLANS */
+.plans-wrap{padding:0 1.3rem .5rem;}
+.plans-lbl{font-size:9px;font-weight:700;font-family:'Syne',sans-serif;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin-bottom:6px;}
+.plans{display:flex;flex-direction:column;gap:4px;}
+.plan-row{display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.03);border:1px solid var(--border);border-radius:8px;padding:6px 10px;}
+.plan-name{font-size:11px;font-weight:600;font-family:'Syne',sans-serif;color:var(--text);}
+.plan-price{font-size:11.5px;font-weight:700;color:var(--ca,var(--a1));font-family:'Syne',sans-serif;white-space:nowrap;margin-left:8px;}
+.plan-note{font-size:9.5px;color:var(--muted);margin-top:1px;}
 
-  .subtitle {
-    margin-top: 1rem;
-    font-size: 1rem;
-    color: var(--muted);
-    max-width: 480px;
-    margin-inline: auto;
-    line-height: 1.7;
-    animation: fadeUp 0.6s 0.2s ease both;
-  }
+/* FEATURES */
+.feats{display:flex;flex-wrap:wrap;gap:4px;padding:.6rem 1.3rem;}
+.ft{font-size:9.5px;padding:3px 8px;border-radius:100px;background:rgba(255,255,255,.04);border:1px solid var(--border);color:rgba(238,237,245,.45);font-family:'Syne',sans-serif;font-weight:600;letter-spacing:.05em;}
 
-  @keyframes fadeUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
+/* DATA NOTE */
+.data-note{font-size:10px;color:var(--muted);padding:0 1.3rem .9rem;line-height:1.5;font-style:italic;}
 
-  /* ── FILTER TABS ── */
-  .filter-bar {
-    display: flex; gap: 8px; flex-wrap: wrap; justify-content: center;
-    margin: 2.5rem 0 3rem;
-    animation: fadeUp 0.6s 0.3s ease both;
-  }
-  .filter-btn {
-    font-family: 'Syne', sans-serif;
-    font-size: 12px; font-weight: 600;
-    padding: 7px 16px; border-radius: 100px;
-    border: 1px solid var(--border);
-    background: transparent;
-    color: var(--muted);
-    cursor: pointer;
-    transition: all 0.2s;
-    letter-spacing: 0.05em;
-  }
-  .filter-btn:hover { border-color: var(--border-hover); color: var(--text); }
-  .filter-btn.active {
-    background: var(--accent1);
-    border-color: var(--accent1);
-    color: #fff;
-  }
+/* FOOTER */
+.cfoot{margin-top:auto;padding:.85rem 1.3rem;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;}
+.curl{font-size:10.5px;color:var(--muted);font-family:'Syne',sans-serif;}
+.arr{width:28px;height:28px;border-radius:8px;background:rgba(255,255,255,.05);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:13px;color:var(--muted);transition:background .2s,border-color .2s,transform .2s,color .2s;}
+.card:hover .arr{background:var(--ca,var(--a1));border-color:var(--ca,var(--a1));color:#fff;transform:rotate(-42deg);}
 
-  /* ── CATEGORY ── */
-  .category { margin-bottom: 3.5rem; }
-  .cat-header {
-    display: flex; align-items: center; gap: 12px;
-    margin-bottom: 1.25rem;
-  }
-  .cat-icon { font-size: 18px; }
-  .cat-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 13px; font-weight: 700;
-    letter-spacing: 0.12em; text-transform: uppercase;
-    color: var(--muted);
-  }
-  .cat-line { flex: 1; height: 1px; background: var(--border); }
-  .cat-count {
-    font-size: 11px; color: var(--muted);
-    background: var(--surface2);
-    padding: 2px 8px; border-radius: 100px;
-    border: 1px solid var(--border);
-  }
-
-  /* ── TOOLS GRID ── */
-  .tools-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
-    gap: 14px;
-  }
-
-  /* ── TOOL CARD ── */
-  .tool-card {
-    position: relative;
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 1.4rem 1.5rem;
-    text-decoration: none;
-    color: var(--text);
-    display: flex; flex-direction: column; gap: 0;
-    transition: border-color 0.25s, transform 0.25s, background 0.25s;
-    overflow: hidden;
-    animation: cardIn 0.5s ease both;
-  }
-  .tool-card::before {
-    content: '';
-    position: absolute; inset: 0;
-    opacity: 0;
-    transition: opacity 0.3s;
-    border-radius: inherit;
-  }
-  .tool-card:hover {
-    border-color: var(--card-accent, var(--accent1));
-    transform: translateY(-3px);
-    background: var(--surface2);
-  }
-  .tool-card:hover::before { opacity: 1; }
-
-  @keyframes cardIn {
-    from { opacity: 0; transform: translateY(16px); }
-    to { opacity: 1; transform: translateY(0); }
-  }
-
-  .card-top {
-    display: flex; align-items: flex-start; justify-content: space-between;
-    margin-bottom: 0.85rem;
-  }
-
-  .tool-logo {
-    width: 42px; height: 42px; border-radius: 10px;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    background: var(--logo-bg, rgba(124,111,255,0.12));
-    border: 1px solid var(--logo-border, rgba(124,111,255,0.2));
-    flex-shrink: 0;
-  }
-
-  .tool-badges { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; }
-  .badge {
-    font-size: 10px; font-weight: 600; font-family: 'Syne', sans-serif;
-    letter-spacing: 0.08em;
-    padding: 3px 8px; border-radius: 100px;
-    white-space: nowrap;
-  }
-  .badge-free { background: rgba(0,217,177,0.12); color: var(--accent3); border: 1px solid rgba(0,217,177,0.2); }
-  .badge-freemium { background: rgba(255,179,71,0.12); color: var(--accent4); border: 1px solid rgba(255,179,71,0.2); }
-  .badge-paid { background: rgba(255,107,157,0.12); color: var(--accent2); border: 1px solid rgba(255,107,157,0.2); }
-
-  .tool-name {
-    font-family: 'Syne', sans-serif;
-    font-size: 1rem; font-weight: 700;
-    margin-bottom: 0.3rem;
-    color: var(--text);
-  }
-
-  .tool-tagline {
-    font-size: 12px; font-weight: 500; letter-spacing: 0.04em;
-    color: var(--card-accent, var(--accent1));
-    margin-bottom: 0.6rem;
-    text-transform: uppercase;
-    font-family: 'Syne', sans-serif;
-  }
-
-  .tool-desc {
-    font-size: 13px; line-height: 1.65;
-    color: var(--muted);
-    flex: 1;
-  }
-
-  .tool-features {
-    display: flex; flex-wrap: wrap; gap: 5px;
-    margin-top: 1rem;
-  }
-  .feat-tag {
-    font-size: 10px;
-    padding: 3px 9px; border-radius: 100px;
-    background: rgba(255,255,255,0.04);
-    border: 1px solid var(--border);
-    color: rgba(255,255,255,0.5);
-    font-family: 'Syne', sans-serif;
-    font-weight: 600; letter-spacing: 0.05em;
-  }
-
-  .card-footer {
-    margin-top: 1rem; padding-top: 0.85rem;
-    border-top: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: space-between;
-  }
-  .tool-url {
-    font-size: 11px; color: var(--muted);
-    font-family: 'Syne', sans-serif;
-  }
-  .arrow {
-    width: 28px; height: 28px; border-radius: 8px;
-    background: rgba(255,255,255,0.05);
-    border: 1px solid var(--border);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 13px;
-    transition: background 0.2s, border-color 0.2s, transform 0.2s;
-    color: var(--muted);
-  }
-  .tool-card:hover .arrow {
-    background: var(--card-accent, var(--accent1));
-    border-color: var(--card-accent, var(--accent1));
-    color: #fff;
-    transform: rotate(-45deg);
-  }
-
-  /* ── FOOTER ── */
-  footer {
-    text-align: center;
-    padding: 3rem 0 4rem;
-    color: var(--muted);
-    font-size: 12px;
-    border-top: 1px solid var(--border);
-    margin-top: 1rem;
-    position: relative; z-index: 1;
-  }
-  footer span { color: var(--accent2); }
-
-  /* ── STATS BAR ── */
-  .stats {
-    display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;
-    margin: 0 0 3rem;
-    animation: fadeUp 0.6s 0.35s ease both;
-  }
-  .stat { text-align: center; }
-  .stat-num {
-    font-family: 'Syne', sans-serif;
-    font-size: 1.6rem; font-weight: 800;
-    background: linear-gradient(135deg, var(--accent1), var(--accent3));
-    -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  }
-  .stat-label { font-size: 11px; color: var(--muted); margin-top: 2px; letter-spacing: 0.08em; text-transform: uppercase; }
-
-  .hidden { display: none !important; }
+footer{text-align:center;padding:2.5rem 0 3.5rem;color:var(--muted);font-size:11px;border-top:1px solid var(--border);margin-top:.5rem;position:relative;z-index:1;}
+footer span{color:var(--a2);}
+.hidden{display:none!important;}
+@media(max-width:600px){.grid{grid-template-columns:1fr;}}
 </style>
 </head>
 <body>
+<div class="o1 orb"></div><div class="o2 orb"></div><div class="o3 orb"></div>
+<div class="wrap">
 
-<div class="orb orb1"></div>
-<div class="orb orb2"></div>
-<div class="orb orb3"></div>
+<header>
+  <div class="eyebrow">My Digital Toolkit 2025</div>
+  <h1>เครื่องมือที่ต้อง<em>มีไว้</em></h1>
+  <p class="sub">ราคา · ฟีเจอร์ · Context/Token · การเก็บข้อมูล ครบในที่เดียว</p>
+</header>
 
-<div class="container">
+<div class="stats">
+  <div class="stat"><div class="stat-n">18</div><div class="stat-l">Tools</div></div>
+  <div class="stat"><div class="stat-n">6</div><div class="stat-l">หมวดหมู่</div></div>
+  <div class="stat"><div class="stat-n">12</div><div class="stat-l">มีแผนฟรี</div></div>
+</div>
 
-  <header>
-    <div class="eyebrow">My Digital Toolkit</div>
-    <h1>เครื่องมือที่ต้อง<span>มีไว้</span></h1>
-    <p class="subtitle">รวม web tools ที่ดีที่สุดสำหรับใช้ส่วนตัว คัดมาแล้ว ใช้งานได้ทันที</p>
-  </header>
+<div class="filter-bar">
+  <button class="fb on" onclick="fc('all',this)">ทั้งหมด</button>
+  <button class="fb" onclick="fc('ai',this)">🤖 AI</button>
+  <button class="fb" onclick="fc('design',this)">🎨 ออกแบบ</button>
+  <button class="fb" onclick="fc('note',this)">📝 โน้ต & งาน</button>
+  <button class="fb" onclick="fc('file',this)">📁 ไฟล์ & ยูทิลิตี</button>
+  <button class="fb" onclick="fc('dev',this)">💻 Developer</button>
+  <button class="fb" onclick="fc('security',this)">🔒 ความปลอดภัย</button>
+</div>
 
-  <div class="stats">
-    <div class="stat"><div class="stat-num">18</div><div class="stat-label">Tools</div></div>
-    <div class="stat"><div class="stat-num">6</div><div class="stat-label">หมวดหมู่</div></div>
-    <div class="stat"><div class="stat-num">12</div><div class="stat-label">ใช้ฟรี</div></div>
+<!-- AI -->
+<div class="cat" data-cat="ai">
+  <div class="cat-hd"><span style="font-size:16px">🤖</span><span class="cat-nm">AI & Assistants</span><div class="cat-ln"></div><span class="cat-ct">4 tools</span></div>
+  <div class="grid">
+
+    <a class="card" href="https://claude.ai" target="_blank" style="--ca:#7c6fff;--lb:rgba(124,111,255,.13);--lbo:rgba(124,111,255,.25)">
+      <div class="ctop"><div class="logo">🤖</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">Anthropic · Constitutional AI</div>
+        <div class="cname">Claude</div>
+        <div class="cdesc">วิเคราะห์เชิงลึก เขียนโค้ด สรุปเอกสาร context window ยาวที่สุดในกลุ่ม ปลอดภัยด้วย Constitutional AI เหมาะงานซับซ้อนและเอกสารยาว</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Context Window</div><div class="info-val">200K tokens <small>(Free/Pro)</small><br>1M tokens <small>(API only)</small></div></div>
+        <div class="info-box"><div class="info-lbl">เก็บข้อมูลสนทนา</div><div class="info-val">Projects ถาวร<br><small>Chat ไม่ข้ามเซสชัน</small></div></div>
+        <div class="info-box"><div class="info-lbl">Models</div><div class="info-val">Sonnet 4.6, Opus 4.6<br><small>Haiku 4.5 (เร็ว)</small></div></div>
+        <div class="info-box"><div class="info-lbl">เทรน Model?</div><div class="info-val">Pro+ ไม่นำไปเทรน<br><small>Free อาจนำไปเทรน</small></div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">จำกัดการใช้งานต่อวัน</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro</div><div class="plan-note">5× usage · Claude Code · Google Workspace</div></div><div class="plan-price">$20/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Max</div><div class="plan-note">5×–20× ของ Pro · Priority access</div></div><div class="plan-price">$100–200/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Team</div><div class="plan-note">Collaborate · 200K ctx · min 5 users</div></div><div class="plan-price">$25/ที่นั่ง/เดือน</div></div>
+        </div>
+      </div>
+      <div class="feats"><span class="ft">200K ctx</span><span class="ft">เขียนโค้ด</span><span class="ft">อ่าน PDF</span><span class="ft">Projects</span><span class="ft">Google Workspace</span><span class="ft">MCP</span></div>
+      <div class="data-note">📦 Projects เก็บถาวร · Pro+ ไม่นำ chat ไปเทรน model · ลบประวัติได้ตลอด</div>
+      <div class="cfoot"><span class="curl">claude.ai</span><div class="arr">↗</div></div>
+    </a>
+
+    <a class="card" href="https://chat.openai.com" target="_blank" style="--ca:#00d4a8;--lb:rgba(0,212,168,.1);--lbo:rgba(0,212,168,.2)">
+      <div class="ctop"><div class="logo">🧠</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">OpenAI · AI ยอดนิยมอันดับ 1 โลก</div>
+        <div class="cname">ChatGPT</div>
+        <div class="cdesc">AI แพร่หลายสุดในโลก รองรับ GPT-5.5 สร้างภาพ DALL-E 3 สร้างวิดีโอ Sora Deep Research Voice Mode real-time และ Codex สำหรับโค้ด</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Context Window</div><div class="info-val">16K <small>(Free)</small><br>128K <small>(Plus)</small><br>1M <small>(Pro $200)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Memory & History</div><div class="info-val">Memory ถาวร (ปิดได้)<br><small>Chat history ไม่จำกัด</small></div></div>
+        <div class="info-box"><div class="info-lbl">Models</div><div class="info-val">GPT-5, GPT-5.5<br>o1, o3, DALL-E 3</div></div>
+        <div class="info-box"><div class="info-lbl">เทรน Model?</div><div class="info-val">Free/Plus อาจนำไปเทรน<br><small>ปิดได้ใน Settings</small></div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">GPT-5 จำกัด · 16K ctx · มีโฆษณา (US)</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Plus</div><div class="plan-note">128K ctx · DALL-E · Sora · Deep Research</div></div><div class="plan-price">$20/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro $100</div><div class="plan-note">5× Plus · Codex · priority access</div></div><div class="plan-price">$100/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro $200</div><div class="plan-note">20× Plus · 1M ctx · o1 Pro mode</div></div><div class="plan-price">$200/เดือน</div></div>
+        </div>
+      </div>
+      <div class="feats"><span class="ft">GPT-5.5</span><span class="ft">DALL-E 3</span><span class="ft">Sora Video</span><span class="ft">Deep Research</span><span class="ft">Voice Mode</span><span class="ft">Codex</span></div>
+      <div class="data-note">📦 Chat history เก็บถาวร ลบเองได้ · Memory เก็บตลอด (ปิดได้) · Business/Enterprise ไม่นำไปเทรน</div>
+      <div class="cfoot"><span class="curl">chat.openai.com</span><div class="arr">↗</div></div>
+    </a>
+
+    <a class="card" href="https://notebooklm.google.com" target="_blank" style="--ca:#4fc3f7;--lb:rgba(79,195,247,.1);--lbo:rgba(79,195,247,.2)">
+      <div class="ctop"><div class="logo">📓</div><div class="badges"><span class="badge bf">ฟรี</span></div></div>
+      <div class="cbody">
+        <div class="tagline">Google · AI อ่านเอกสารส่วนตัว</div>
+        <div class="cname">NotebookLM</div>
+        <div class="cdesc">อัปโหลด PDF, Docs, YouTube, Podcast แล้วให้ AI สรุป ตอบคำถาม และสร้าง Audio Podcast จากเนื้อหา powered by Gemini 2.5 ฟรี 100%</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Notebooks</div><div class="info-val">100 <small>(Free)</small><br>500 <small>(AI Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Sources/Notebook</div><div class="info-val">50 <small>(Free)</small><br>300 <small>(AI Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Context/Source</div><div class="info-val">สูงสุด 500K tokens<br><small>ต่อ source</small></div></div>
+        <div class="info-box"><div class="info-lbl">เก็บข้อมูล</div><div class="info-val">ถาวร ตราบใช้ Google Account</div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">100 notebooks · Audio Overview 3/วัน</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Google AI Pro</div><div class="plan-note">500 notebooks · Audio 5× · Gemini สูงสุด</div></div><div class="plan-price">$19.99/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Workspace Standard</div><div class="plan-note">NotebookLM Plus รวมอยู่</div></div><div class="plan-price">$14+/ที่นั่ง/เดือน</div></div>
+        </div>
+      </div>
+      <div class="feats"><span class="ft">อ่าน PDF</span><span class="ft">YouTube</span><span class="ft">Audio Podcast</span><span class="ft">ไม่ออกนอก Source</span><span class="ft">Gemini 2.5</span></div>
+      <div class="data-note">📦 ข้อมูลใน Google Drive ของคุณ · ไม่นำไปเทรน model · ลบ notebook เมื่อไหร่ก็ได้</div>
+      <div class="cfoot"><span class="curl">notebooklm.google.com</span><div class="arr">↗</div></div>
+    </a>
+
+    <a class="card" href="https://perplexity.ai" target="_blank" style="--ca:#ffb84d;--lb:rgba(255,184,77,.1);--lbo:rgba(255,184,77,.2)">
+      <div class="ctop"><div class="logo">🔍</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">Search Engine + AI + Citations</div>
+        <div class="cname">Perplexity</div>
+        <div class="cdesc">ค้นหา real-time แล้ว AI สรุปพร้อม source อ้างอิงทุกประโยค เลือก model ได้ (GPT-5, Claude Opus, Sonar) ข้อมูลสดใหม่ ไม่มีโฆษณา</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Context Window</div><div class="info-val">200K tokens <small>(Sonar Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Pro Searches</div><div class="info-val">5/วัน <small>(Free)</small><br>300+/วัน <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Models (Pro)</div><div class="info-val">GPT-5, Claude Opus 4<br>o3-pro, Sonar</div></div>
+        <div class="info-box"><div class="info-lbl">เก็บ Search History</div><div class="info-val">ไม่มีกำหนด<br><small>(มีบัญชี)</small></div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">Quick search ไม่จำกัด · Pro 5 ครั้ง/วัน</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro</div><div class="plan-note">300+ Pro search · อัปโหลดไฟล์ · $5 API credit</div></div><div class="plan-price">$20/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Max</div><div class="plan-note">Unlimited · early access · priority support</div></div><div class="plan-price">$200/เดือน</div></div>
+        </div>
+      </div>
+      <div class="feats"><span class="ft">Real-time Web</span><span class="ft">Citations</span><span class="ft">อัปโหลดไฟล์</span><span class="ft">Multi-model</span><span class="ft">ไม่มีโฆษณา</span></div>
+      <div class="data-note">📦 Search history เก็บตราบ account ยังอยู่ · Enterprise ตั้ง data retention ได้เอง</div>
+      <div class="cfoot"><span class="curl">perplexity.ai</span><div class="arr">↗</div></div>
+    </a>
+
   </div>
+</div>
 
-  <div class="filter-bar">
-    <button class="filter-btn active" onclick="filterCat('all')">ทั้งหมด</button>
-    <button class="filter-btn" onclick="filterCat('ai')">🤖 AI</button>
-    <button class="filter-btn" onclick="filterCat('design')">🎨 ออกแบบ</button>
-    <button class="filter-btn" onclick="filterCat('note')">📝 โน้ต & งาน</button>
-    <button class="filter-btn" onclick="filterCat('file')">📁 ไฟล์ & ยูทิลิตี</button>
-    <button class="filter-btn" onclick="filterCat('dev')">💻 Developer</button>
-    <button class="filter-btn" onclick="filterCat('security')">🔒 ความปลอดภัย</button>
+<!-- DESIGN -->
+<div class="cat" data-cat="design">
+  <div class="cat-hd"><span style="font-size:16px">🎨</span><span class="cat-nm">ออกแบบ & สร้างภาพ</span><div class="cat-ln"></div><span class="cat-ct">4 tools</span></div>
+  <div class="grid">
+
+    <a class="card" href="https://www.canva.com" target="_blank" style="--ca:#ff6b9d;--lb:rgba(255,107,157,.1);--lbo:rgba(255,107,157,.2)">
+      <div class="ctop"><div class="logo">✏️</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">ออกแบบสำหรับทุกคน</div>
+        <div class="cname">Canva</div>
+        <div class="cdesc">สร้างกราฟิก โปสเตอร์ Presentation สื่อโซเชียล template สำเร็จรูปหลายพัน มี AI Magic ลบพื้นหลัง ขยายภาพ เขียน copy ไม่ต้องพื้นฐานดีไซน์</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Cloud Storage</div><div class="info-val">5GB <small>(Free)</small><br>1TB <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">เก็บงาน</div><div class="info-val">ถาวร ไม่มีหมดอายุ<br><small>ตราบ account ยังอยู่</small></div></div>
+        <div class="info-box"><div class="info-lbl">Templates</div><div class="info-val">250,000+ <small>(Free)</small><br>610,000+ <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Export</div><div class="info-val">PNG JPG PDF MP4 SVG GIF</div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">5GB · 250K templates · AI จำกัด</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro</div><div class="plan-note">1TB · AI Magic ไม่จำกัด · Brand Kit</div></div><div class="plan-price">$15/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Teams</div><div class="plan-note">ทำงานร่วมกัน + Brand Kit ทีม</div></div><div class="plan-price">$10/ที่นั่ง/เดือน</div></div>
+        </div>
+      </div>
+      <div class="feats"><span class="ft">AI Magic</span><span class="ft">Background Remove</span><span class="ft">Video Edit</span><span class="ft">Presentation</span><span class="ft">Social Scheduler</span></div>
+      <div class="data-note">📦 งานเก็บ cloud ถาวร · ไม่นำงานไปเทรน AI · ส่งออกได้ทุกฟอร์แมต</div>
+      <div class="cfoot"><span class="curl">canva.com</span><div class="arr">↗</div></div>
+    </a>
+
+    <a class="card" href="https://www.figma.com" target="_blank" style="--ca:#a78bfa;--lb:rgba(167,139,250,.1);--lbo:rgba(167,139,250,.2)">
+      <div class="ctop"><div class="logo">🖌️</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">UI/UX Design Industry Standard</div>
+        <div class="cname">Figma</div>
+        <div class="cdesc">เครื่องมือออกแบบ UI/UX มาตรฐานอุตสาหกรรม สร้าง Prototype interactive real-time collaboration Dev Mode ส่งโค้ดให้ developer และ plugin นับพัน</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Files (Free)</div><div class="info-val">3 Figma files<br>3 FigJam boards</div></div>
+        <div class="info-box"><div class="info-lbl">Version History</div><div class="info-val">30 วัน <small>(Free)</small><br>ไม่จำกัด <small>(Pro+)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Collaboration</div><div class="info-val">Real-time ไม่จำกัดคน</div></div>
+        <div class="info-box"><div class="info-lbl">Storage</div><div class="info-val">ไม่จำกัด <small>(cloud-based)</small></div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free (Starter)</div><div class="plan-note">3 files · 3 FigJam · 30 วัน history</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Professional</div><div class="plan-note">ไม่จำกัด files · version history ไม่จำกัด</div></div><div class="plan-price">$12/ที่นั่ง/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Organization</div><div class="plan-note">SSO · Analytics · Dev Mode เต็ม</div></div><div class="plan-price">$45/ที่นั่ง/เดือน</div></div>
+        </div>
+      </div>
+      <div class="feats"><span class="ft">Prototype</span><span class="ft">Auto Layout</span><span class="ft">Dev Mode</span><span class="ft">Variables</span><span class="ft">FigJam</span><span class="ft">Plugin</span></div>
+      <div class="data-note">📦 Files เก็บ cloud ถาวร · Version history 30 วัน (Free) / ไม่จำกัด (Pro+) · Export SVG/PNG/CSS</div>
+      <div class="cfoot"><span class="curl">figma.com</span><div class="arr">↗</div></div>
+    </a>
+
+    <a class="card" href="https://ideogram.ai" target="_blank" style="--ca:#00d4a8;--lb:rgba(0,212,168,.1);--lbo:rgba(0,212,168,.2)">
+      <div class="ctop"><div class="logo">🖼️</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">Text-to-Image · พิมพ์ตัวอักษรได้แม่น</div>
+        <div class="cname">Ideogram</div>
+        <div class="cdesc">สร้างภาพ AI ที่โดดเด่นเรื่องพิมพ์ตัวอักษรในภาพได้แม่นมาก เหมาะทำโปสเตอร์ thumbnail งานที่ต้องการ text บนภาพ คุณภาพ realistic สูง</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Free Generations</div><div class="info-val">10 รูป/วัน <small>(Free)</small><br>Unlimited <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Max Resolution</div><div class="info-val">สูงสุด 2048px <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">เก็บภาพ</div><div class="info-val">ถาวรใน Gallery<br><small>Private ได้ (Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Commercial Use</div><div class="info-val">ได้ <small>(Pro)</small><br>Free = ไม่ค้าขาย</div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">10 รูป/วัน · Gallery สาธารณะ</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Basic</div><div class="plan-note">400 gen/เดือน · Private gallery</div></div><div class="plan-price">$7/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro</div><div class="plan-note">Unlimited · Priority · High-res · Commercial</div></div><div class="plan-price">$16/เดือน</div></div>
+        </div>
+      </div>
+      <div class="feats"><span class="ft">Text in Image</span><span class="ft">Realistic</span><span class="ft">Poster</span><span class="ft">Magic Prompt</span><span class="ft">Edit</span></div>
+      <div class="data-note">📦 ภาพ Free เป็น public · Pro ตั้ง private ได้ · ภาพเก็บถาวรใน Gallery</div>
+      <div class="cfoot"><span class="curl">ideogram.ai</span><div class="arr">↗</div></div>
+    </a>
+
+    <a class="card" href="https://remove.bg" target="_blank" style="--ca:#ffb84d;--lb:rgba(255,184,77,.1);--lbo:rgba(255,184,77,.2)">
+      <div class="ctop"><div class="logo">✂️</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">ลบพื้นหลังใน 5 วินาที</div>
+        <div class="cname">Remove.bg</div>
+        <div class="cdesc">ลบพื้นหลังรูปภาพอัตโนมัติด้วย AI แม่นยำทั้งคน สินค้า วัตถุ ผลลัพธ์ PNG ขอบคมชัด ไม่ต้องตัดมือ มี API พร้อมใช้งาน รองรับ Bulk upload</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Free Downloads</div><div class="info-val">Preview ฟรีไม่จำกัด<br>Full-res = ซื้อ credits</div></div>
+        <div class="info-box"><div class="info-lbl">Max Resolution</div><div class="info-val">25 Megapixels <small>(ชำระ)</small></div></div>
+        <div class="info-box"><div class="info-lbl">เก็บรูปบน Server</div><div class="info-val">ลบอัตโนมัติ<br><small>ภายใน 1 ชั่วโมง</small></div></div>
+        <div class="info-box"><div class="info-lbl">API Pricing</div><div class="info-val">$0.02–0.20/ภาพ</div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free Preview</div><div class="plan-note">Low-res ดาวน์โหลดฟรีไม่จำกัด</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Credits</div><div class="plan-note">High-res ซื้อตามใช้</div></div><div class="plan-price">$1.99+/40 credits</div></div>
+          <div class="plan-row"><div><div class="plan-name">Subscription</div><div class="plan-note">Unlimited HD + API included</div></div><div class="plan-price">$9/เดือน</div></div>
+        </div>
+      </div>
+      <div class="feats"><span class="ft">Auto AI Cut</span><span class="ft">PNG Transparent</span><span class="ft">Bulk</span><span class="ft">API</span><span class="ft">Photoshop Plugin</span></div>
+      <div class="data-note">📦 รูปถูกลบออกจากเซิร์ฟเวอร์ภายใน 1 ชั่วโมง · ไม่นำไปเทรน model · Transfer SSL</div>
+      <div class="cfoot"><span class="curl">remove.bg</span><div class="arr">↗</div></div>
+    </a>
+
   </div>
+</div>
 
-  <!-- AI -->
-  <div class="category" data-cat="ai">
-    <div class="cat-header">
-      <span class="cat-icon">🤖</span>
-      <span class="cat-name">AI & Assistants</span>
-      <div class="cat-line"></div>
-      <span class="cat-count">4 tools</span>
-    </div>
-    <div class="tools-grid">
+<!-- NOTE -->
+<div class="cat" data-cat="note">
+  <div class="cat-hd"><span style="font-size:16px">📝</span><span class="cat-nm">โน้ต & จัดการงาน</span><div class="cat-ln"></div><span class="cat-ct">3 tools</span></div>
+  <div class="grid">
 
-      <a class="tool-card" href="https://claude.ai" target="_blank" style="--card-accent:#7c6fff;--logo-bg:rgba(124,111,255,0.12);--logo-border:rgba(124,111,255,0.25)">
-        <div class="card-top">
-          <div class="tool-logo">🤖</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
+    <a class="card" href="https://www.notion.so" target="_blank" style="--ca:#4fc3f7;--lb:rgba(79,195,247,.1);--lbo:rgba(79,195,247,.2)">
+      <div class="ctop"><div class="logo">📋</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">All-in-One Workspace + AI Agents</div>
+        <div class="cname">Notion</div>
+        <div class="cdesc">โน้ต Wiki Database PM ในที่เดียว Notion 3.0 มี AI Agents รัน workflow อัตโนมัติ ใช้ model หลายตัว (GPT-5, Claude, o3) Sync ทุกอุปกรณ์</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">File Upload</div><div class="info-val">5MB/ไฟล์ <small>(Free)</small><br>ไม่จำกัด <small>(Plus+)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Version History</div><div class="info-val">7 วัน <small>(Free)</small><br>90 วัน <small>(Plus)</small><br>ไม่จำกัด <small>(Business)</small></div></div>
+        <div class="info-box"><div class="info-lbl">AI Models</div><div class="info-val">GPT-5, Claude Opus<br>o3 <small>(Business+)</small></div></div>
+        <div class="info-box"><div class="info-lbl">เก็บข้อมูล</div><div class="info-val">ถาวร cloud<br><small>Export Markdown ได้</small></div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">Blocks ไม่จำกัด (solo) · 5MB upload</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Plus</div><div class="plan-note">Upload ไม่จำกัด · 90 วัน history</div></div><div class="plan-price">$10/ที่นั่ง/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Business</div><div class="plan-note">AI Agents · Multi-model · SAML SSO</div></div><div class="plan-price">$20/ที่นั่ง/เดือน</div></div>
         </div>
-        <div class="tool-tagline">AI Assistant ที่ดีที่สุด</div>
-        <div class="tool-name">Claude</div>
-        <div class="tool-desc">AI ผู้ช่วยจาก Anthropic ที่เก่งในการวิเคราะห์เชิงลึก เขียนโค้ด แต่งเนื้อหา และให้คำปรึกษา บริบทยาวมากถึง 200K tokens เหมาะสำหรับงานซับซ้อน</div>
-        <div class="tool-features">
-          <span class="feat-tag">เขียนโค้ด</span>
-          <span class="feat-tag">วิเคราะห์</span>
-          <span class="feat-tag">สรุปเอกสาร</span>
-          <span class="feat-tag">บริบทยาว</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">claude.ai</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
+      </div>
+      <div class="feats"><span class="ft">AI Agents</span><span class="ft">Database</span><span class="ft">Kanban</span><span class="ft">Notion Mail</span><span class="ft">GitHub Sync</span><span class="ft">Figma Embed</span></div>
+      <div class="data-note">📦 ข้อมูลเก็บ cloud ถาวร · Version history ขึ้นกับแผน · ส่งออก Markdown/CSV ได้</div>
+      <div class="cfoot"><span class="curl">notion.so</span><div class="arr">↗</div></div>
+    </a>
 
-      <a class="tool-card" href="https://chat.openai.com" target="_blank" style="--card-accent:#00d9b1;--logo-bg:rgba(0,217,177,0.1);--logo-border:rgba(0,217,177,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">🧠</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
+    <a class="card" href="https://obsidian.md" target="_blank" style="--ca:#7c6fff;--lb:rgba(124,111,255,.12);--lbo:rgba(124,111,255,.25)">
+      <div class="ctop"><div class="logo">💎</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">Local-first · Second Brain ส่วนตัว</div>
+        <div class="cname">Obsidian</div>
+        <div class="cdesc">จดโน้ต Markdown เก็บในเครื่องตัวเอง 100% ไม่ต้องส่งข้อมูลขึ้น cloud เชื่อมโยงโน้ตด้วย Graph View เห็นความสัมพันธ์ระหว่างความคิด plugin นับพัน</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">การเก็บข้อมูล</div><div class="info-val">Local ในเครื่อง<br><small>ไม่ขึ้นกับ server ใด</small></div></div>
+        <div class="info-box"><div class="info-lbl">Sync</div><div class="info-val">Obsidian Sync (ชำระ)<br><small>หรือ iCloud/Dropbox</small></div></div>
+        <div class="info-box"><div class="info-lbl">File Format</div><div class="info-val">Markdown (.md)<br><small>เปิดด้วย app ไหนก็ได้</small></div></div>
+        <div class="info-box"><div class="info-lbl">Version History</div><div class="info-val">1 ปี <small>(Sync plan)</small></div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Personal</div><div class="plan-note">ใช้ส่วนตัวฟรี 100% ไม่จำกัด</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Catalyst</div><div class="plan-note">Early access · support developer</div></div><div class="plan-price">$25 ครั้งเดียว</div></div>
+          <div class="plan-row"><div><div class="plan-name">Sync</div><div class="plan-note">Sync ทุกอุปกรณ์ + 1 ปี version history</div></div><div class="plan-price">$10/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Publish</div><div class="plan-note">เผยแพร่โน้ตเป็นเว็บได้</div></div><div class="plan-price">$16/เดือน</div></div>
         </div>
-        <div class="tool-tagline">AI ยอดนิยมอันดับ 1</div>
-        <div class="tool-name">ChatGPT</div>
-        <div class="tool-desc">AI ที่ใช้งานแพร่หลายที่สุดในโลก ตอบคำถาม แปลภาษา สรุปข้อมูล สร้างรูปภาพ (DALL-E) และมี GPT Store ให้เลือกใช้ plugin ได้อีกมากมาย</div>
-        <div class="tool-features">
-          <span class="feat-tag">DALL-E</span>
-          <span class="feat-tag">GPT Store</span>
-          <span class="feat-tag">แปลภาษา</span>
-          <span class="feat-tag">ค้นเว็บ</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">chat.openai.com</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
+      </div>
+      <div class="feats"><span class="ft">Local First</span><span class="ft">Graph View</span><span class="ft">Markdown</span><span class="ft">1000+ Plugin</span><span class="ft">Canvas</span><span class="ft">Privacy Max</span></div>
+      <div class="data-note">📦 ข้อมูลอยู่ในเครื่องคุณ 100% · ไม่มีการส่งข้อมูลหากไม่เปิด Sync · คุณเป็นเจ้าของไฟล์ตลอด</div>
+      <div class="cfoot"><span class="curl">obsidian.md</span><div class="arr">↗</div></div>
+    </a>
 
-      <a class="tool-card" href="https://notebooklm.google.com" target="_blank" style="--card-accent:#4fc3f7;--logo-bg:rgba(79,195,247,0.1);--logo-border:rgba(79,195,247,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">📓</div>
-          <div class="tool-badges"><span class="badge badge-free">ฟรี</span></div>
+    <a class="card" href="https://todoist.com" target="_blank" style="--ca:#ff6b9d;--lb:rgba(255,107,157,.1);--lbo:rgba(255,107,157,.2)">
+      <div class="ctop"><div class="logo">✅</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">Task Manager ที่ดีที่สุด</div>
+        <div class="cname">Todoist</div>
+        <div class="cdesc">จัดการ task อย่างเป็นระบบ Priority 4 ระดับ กำหนด deadline subtask ดู productivity report Karma score Sync กับ Google/Apple Calendar ทุกอุปกรณ์</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Projects (Free)</div><div class="info-val">5 projects<br>25 tasks/project</div></div>
+        <div class="info-box"><div class="info-lbl">Activity History</div><div class="info-val">1 สัปดาห์ <small>(Free)</small><br>ไม่จำกัด <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Reminders</div><div class="info-val">ไม่มี <small>(Free)</small><br>ทุกประเภท <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Integrations</div><div class="info-val">Google Cal, Slack<br>Zapier, Alexa, IFTTT</div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">5 projects · 25 tasks each</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro</div><div class="plan-note">300 projects · Reminders · AI Assist · Filters</div></div><div class="plan-price">$4/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Business</div><div class="plan-note">ทีม + Admin + Member roles</div></div><div class="plan-price">$6/ที่นั่ง/เดือน</div></div>
         </div>
-        <div class="tool-tagline">AI อ่านเอกสารแทนคุณ</div>
-        <div class="tool-name">NotebookLM</div>
-        <div class="tool-desc">อัปโหลด PDF, Google Docs, YouTube, Podcast แล้วให้ AI สรุป ตอบคำถาม และสร้าง Podcast Audio จากเนื้อหาได้อัตโนมัติ ฟรี 100%</div>
-        <div class="tool-features">
-          <span class="feat-tag">อ่าน PDF</span>
-          <span class="feat-tag">สร้าง Podcast</span>
-          <span class="feat-tag">ถามตอบ</span>
-          <span class="feat-tag">Google</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">notebooklm.google.com</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
+      </div>
+      <div class="feats"><span class="ft">Priority 4 ระดับ</span><span class="ft">Recurring</span><span class="ft">Karma Score</span><span class="ft">Productivity Report</span><span class="ft">AI Assist</span></div>
+      <div class="data-note">📦 Tasks เก็บ cloud ถาวร · Activity log: 1 สัปดาห์ (Free) / ไม่จำกัด (Pro) · Export CSV ได้</div>
+      <div class="cfoot"><span class="curl">todoist.com</span><div class="arr">↗</div></div>
+    </a>
 
-      <a class="tool-card" href="https://perplexity.ai" target="_blank" style="--card-accent:#ffb347;--logo-bg:rgba(255,179,71,0.1);--logo-border:rgba(255,179,71,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">🔍</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
-        </div>
-        <div class="tool-tagline">Search Engine + AI</div>
-        <div class="tool-name">Perplexity</div>
-        <div class="tool-desc">ค้นหาข้อมูลแล้ว AI สรุปคำตอบพร้อม source อ้างอิง ข้อมูลสดใหม่จากอินเทอร์เน็ต ไม่มีโฆษณา เหมาะแทน Google เมื่อต้องการคำตอบตรงๆ</div>
-        <div class="tool-features">
-          <span class="feat-tag">ข้อมูลสด</span>
-          <span class="feat-tag">มี Source</span>
-          <span class="feat-tag">ค้นวิชาการ</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">perplexity.ai</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
-
-    </div>
   </div>
+</div>
 
-  <!-- DESIGN -->
-  <div class="category" data-cat="design">
-    <div class="cat-header">
-      <span class="cat-icon">🎨</span>
-      <span class="cat-name">ออกแบบ & สร้างภาพ</span>
-      <div class="cat-line"></div>
-      <span class="cat-count">4 tools</span>
-    </div>
-    <div class="tools-grid">
+<!-- FILE -->
+<div class="cat" data-cat="file">
+  <div class="cat-hd"><span style="font-size:16px">📁</span><span class="cat-nm">ไฟล์ & ยูทิลิตี</span><div class="cat-ln"></div><span class="cat-ct">4 tools</span></div>
+  <div class="grid">
 
-      <a class="tool-card" href="https://www.canva.com" target="_blank" style="--card-accent:#ff6b9d;--logo-bg:rgba(255,107,157,0.1);--logo-border:rgba(255,107,157,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">✏️</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
+    <a class="card" href="https://smallpdf.com" target="_blank" style="--ca:#ff6b9d;--lb:rgba(255,107,157,.1);--lbo:rgba(255,107,157,.2)">
+      <div class="ctop"><div class="logo">📄</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">PDF ทุกอย่าง จบในที่เดียว</div>
+        <div class="cname">Smallpdf</div>
+        <div class="cdesc">จัดการ PDF ครบจบ รวม ตัด แปลง บีบอัด เซ็น ล็อค PDF แปลง Word/Excel เป็น PDF และกลับกัน ไม่ต้องติดตั้ง มี OCR สแกนข้อความ 25+ ภาษา</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Free Limit</div><div class="info-val">2 tasks/ชั่วโมง<br>200MB/ไฟล์</div></div>
+        <div class="info-box"><div class="info-lbl">เก็บไฟล์บน Server</div><div class="info-val">14 วัน <small>(Free)</small><br>30+ วัน <small>(Pro)</small><br>แล้วลบอัตโนมัติ</div></div>
+        <div class="info-box"><div class="info-lbl">OCR</div><div class="info-val">25+ ภาษา<br><small>รวมภาษาไทย</small></div></div>
+        <div class="info-box"><div class="info-lbl">eSign</div><div class="info-val">ลายเซ็นดิจิทัล<br><small>ถูกต้องตามกฎหมาย</small></div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">2 tasks/ชั่วโมง · 200MB</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro</div><div class="plan-note">ไม่จำกัด tasks · 5GB · OCR · eSign ไม่จำกัด</div></div><div class="plan-price">$9/เดือน</div></div>
         </div>
-        <div class="tool-tagline">ออกแบบสำหรับทุกคน</div>
-        <div class="tool-name">Canva</div>
-        <div class="tool-desc">สร้างกราฟิก โปสเตอร์ Presentation โลโก้ และสื่อโซเชียล template สำเร็จรูปหลายพันแบบ มี AI ช่วยสร้างภาพ ลบพื้นหลัง ไม่ต้องมีพื้นฐานดีไซน์</div>
-        <div class="tool-features">
-          <span class="feat-tag">Template</span>
-          <span class="feat-tag">AI Magic</span>
-          <span class="feat-tag">Video</span>
-          <span class="feat-tag">Presentation</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">canva.com</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
+      </div>
+      <div class="feats"><span class="ft">Merge</span><span class="ft">Compress</span><span class="ft">OCR</span><span class="ft">eSign</span><span class="ft">Word↔PDF</span><span class="ft">Encrypt</span></div>
+      <div class="data-note">📦 ไฟล์เก็บ 14 วัน (Free) / 30 วัน (Pro) แล้วลบอัตโนมัติ · Transfer ไปยัง Google Drive ได้</div>
+      <div class="cfoot"><span class="curl">smallpdf.com</span><div class="arr">↗</div></div>
+    </a>
 
-      <a class="tool-card" href="https://www.figma.com" target="_blank" style="--card-accent:#7c6fff;--logo-bg:rgba(124,111,255,0.12);--logo-border:rgba(124,111,255,0.25)">
-        <div class="card-top">
-          <div class="tool-logo">🖌️</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
+    <a class="card" href="https://squoosh.app" target="_blank" style="--ca:#00d4a8;--lb:rgba(0,212,168,.1);--lbo:rgba(0,212,168,.2)">
+      <div class="ctop"><div class="logo">🗜️</div><div class="badges"><span class="badge bf">ฟรี 100%</span></div></div>
+      <div class="cbody">
+        <div class="tagline">Google · บีบอัดรูปไม่ต้องอัปโหลด</div>
+        <div class="cname">Squoosh</div>
+        <div class="cdesc">บีบอัดรูปภาพโดย Google ประมวลผลในเครื่อง 100% ไฟล์ไม่ออกจาก browser รองรับ WebP AVIF PNG JPEG เห็นผลก่อน-หลังแบบ real-time drag slider</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">ราคา</div><div class="info-val">ฟรี 100%<br>ไม่มีแผนชำระเงิน</div></div>
+        <div class="info-box"><div class="info-lbl">Privacy</div><div class="info-val">ประมวลผลใน browser<br><small>ไฟล์ไม่ออกนอกเครื่อง</small></div></div>
+        <div class="info-box"><div class="info-lbl">Output Formats</div><div class="info-val">WebP, AVIF, PNG<br>JPEG, JXL, OxiPNG</div></div>
+        <div class="info-box"><div class="info-lbl">File Size Limit</div><div class="info-val">ขึ้นกับ RAM เครื่อง<br><small>ไม่มีการจำกัด</small></div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free (Only Plan)</div><div class="plan-note">ทุกฟีเจอร์ฟรี · Open Source by Google</div></div><div class="plan-price">ฟรี</div></div>
         </div>
-        <div class="tool-tagline">UI/UX Design Standard</div>
-        <div class="tool-name">Figma</div>
-        <div class="tool-desc">เครื่องมือออกแบบ UI/UX มาตรฐานอุตสาหกรรม สร้าง Prototype แบบ interactive ทำงานร่วมกัน real-time มี plugin มากมาย นิยมในวงการ Product Design</div>
-        <div class="tool-features">
-          <span class="feat-tag">Prototype</span>
-          <span class="feat-tag">Collaborate</span>
-          <span class="feat-tag">Component</span>
-          <span class="feat-tag">Dev Mode</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">figma.com</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
+      </div>
+      <div class="feats"><span class="ft">WebP</span><span class="ft">AVIF</span><span class="ft">Before/After</span><span class="ft">No Upload</span><span class="ft">Open Source</span></div>
+      <div class="data-note">📦 ไฟล์ไม่เคยออกจากเครื่องคุณ ประมวลผลใน browser ทั้งหมด · Privacy สูงสุด · ไม่มี server ของ Squoosh</div>
+      <div class="cfoot"><span class="curl">squoosh.app</span><div class="arr">↗</div></div>
+    </a>
 
-      <a class="tool-card" href="https://ideogram.ai" target="_blank" style="--card-accent:#00d9b1;--logo-bg:rgba(0,217,177,0.1);--logo-border:rgba(0,217,177,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">🖼️</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
+    <a class="card" href="https://wetransfer.com" target="_blank" style="--ca:#4fc3f7;--lb:rgba(79,195,247,.1);--lbo:rgba(79,195,247,.2)">
+      <div class="ctop"><div class="logo">📦</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">ส่งไฟล์ใหญ่ ไม่ต้องสมัคร</div>
+        <div class="cname">WeTransfer</div>
+        <div class="cdesc">ส่งไฟล์ใหญ่ได้ทันทีไม่ต้องสมัคร แค่อัปโหลดแล้วส่ง link หรือ email ได้เลย เก็บไฟล์ 7 วัน ดาวน์โหลดได้ไม่จำกัดครั้งในช่วงเวลานั้น</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">ขนาดไฟล์</div><div class="info-val">2GB <small>(Free)</small><br>200GB <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">เก็บไฟล์นานเท่าไหร่</div><div class="info-val">7 วัน <small>(Free)</small><br>1 ปี <small>(Pro)</small><br>แล้วลบอัตโนมัติ</div></div>
+        <div class="info-box"><div class="info-lbl">Password</div><div class="info-val">ไม่มี <small>(Free)</small><br>ตั้งได้ <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Downloads</div><div class="info-val">ไม่จำกัดครั้ง<br><small>ตลอดช่วงเวลา</small></div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">2GB · เก็บ 7 วัน · ไม่ต้องสมัคร</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro</div><div class="plan-note">200GB · เก็บ 1 ปี · Password · Custom link</div></div><div class="plan-price">$15/เดือน</div></div>
         </div>
-        <div class="tool-tagline">Text-to-Image ที่แม่นสุด</div>
-        <div class="tool-name">Ideogram</div>
-        <div class="tool-desc">สร้างภาพจาก prompt ที่เด่นคือพิมพ์ตัวอักษรในภาพได้แม่นมาก เหมาะทำโปสเตอร์ thumbnail และงานที่ต้องการ text บนภาพ คุณภาพสูงมาก</div>
-        <div class="tool-features">
-          <span class="feat-tag">Text in Image</span>
-          <span class="feat-tag">Poster</span>
-          <span class="feat-tag">Realistic</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">ideogram.ai</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
+      </div>
+      <div class="feats"><span class="ft">2GB ฟรี</span><span class="ft">ไม่ต้องสมัคร</span><span class="ft">Link แชร์</span><span class="ft">Email ส่ง</span><span class="ft">Download Tracking</span></div>
+      <div class="data-note">📦 ไฟล์ Free ลบอัตโนมัติหลัง 7 วัน · Pro เก็บ 1 ปี · เข้ารหัส SSL ระหว่างส่ง</div>
+      <div class="cfoot"><span class="curl">wetransfer.com</span><div class="arr">↗</div></div>
+    </a>
 
-      <a class="tool-card" href="https://remove.bg" target="_blank" style="--card-accent:#ffb347;--logo-bg:rgba(255,179,71,0.1);--logo-border:rgba(255,179,71,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">✂️</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
+    <a class="card" href="https://www.wolframalpha.com" target="_blank" style="--ca:#ffb84d;--lb:rgba(255,184,77,.1);--lbo:rgba(255,184,77,.2)">
+      <div class="ctop"><div class="logo">🔢</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">คำนวณสิ่งที่ Google ทำไม่ได้</div>
+        <div class="cname">Wolfram Alpha</div>
+        <div class="cdesc">เครื่องคิดเลข AI ระดับสูง คณิตศาสตร์ สถิติ Physics Chemistry ดูกราฟ แปลงหน่วย ข้อมูลโภชนาการ Finance ครอบคลุมความรู้วิทยาศาสตร์ระดับสูง</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Step-by-step</div><div class="info-val">ไม่มี <small>(Free)</small><br>แสดง steps <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">เก็บ History</div><div class="info-val">ไม่มี <small>(Free)</small><br>เก็บได้ <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">ความรู้ที่ครอบคลุม</div><div class="info-val">Math, Science, Geo<br>Nutrition, Finance</div></div>
+        <div class="info-box"><div class="info-lbl">Upload Data</div><div class="info-val">ได้ <small>(Pro Premium)</small><br>วิเคราะห์ dataset</div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">คำนวณพื้นฐาน ไม่มี steps</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro</div><div class="plan-note">Step-by-step · ไม่มีโฆษณา · History</div></div><div class="plan-price">$7.25/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro Premium</div><div class="plan-note">Upload dataset · Priority compute</div></div><div class="plan-price">$12/เดือน</div></div>
         </div>
-        <div class="tool-tagline">ลบพื้นหลังใน 5 วินาที</div>
-        <div class="tool-name">Remove.bg</div>
-        <div class="tool-desc">ลบพื้นหลังรูปภาพอัตโนมัติด้วย AI อย่างรวดเร็วและแม่นยำ ทำงานได้กับทั้งคน สินค้า และวัตถุทั่วไป ผลลัพธ์คมชัดไม่ต้องตัดด้วยมือเลย</div>
-        <div class="tool-features">
-          <span class="feat-tag">Auto AI</span>
-          <span class="feat-tag">PNG</span>
-          <span class="feat-tag">Bulk</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">remove.bg</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
+      </div>
+      <div class="feats"><span class="ft">Math</span><span class="ft">Physics</span><span class="ft">Chemistry</span><span class="ft">Graph Plot</span><span class="ft">Finance</span><span class="ft">Nutrition</span></div>
+      <div class="data-note">📦 ไม่เก็บ query ระยะยาว (Free) · ข้อมูลที่อัปโหลด Pro Premium เก็บชั่วคราว</div>
+      <div class="cfoot"><span class="curl">wolframalpha.com</span><div class="arr">↗</div></div>
+    </a>
 
-    </div>
   </div>
+</div>
 
-  <!-- NOTE & TASKS -->
-  <div class="category" data-cat="note">
-    <div class="cat-header">
-      <span class="cat-icon">📝</span>
-      <span class="cat-name">โน้ต & จัดการงาน</span>
-      <div class="cat-line"></div>
-      <span class="cat-count">3 tools</span>
-    </div>
-    <div class="tools-grid">
+<!-- DEV -->
+<div class="cat" data-cat="dev">
+  <div class="cat-hd"><span style="font-size:16px">💻</span><span class="cat-nm">Developer Tools</span><div class="cat-ln"></div><span class="cat-ct">2 tools</span></div>
+  <div class="grid">
 
-      <a class="tool-card" href="https://www.notion.so" target="_blank" style="--card-accent:#4fc3f7;--logo-bg:rgba(79,195,247,0.1);--logo-border:rgba(79,195,247,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">📋</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
+    <a class="card" href="https://github.com" target="_blank" style="--ca:#a78bfa;--lb:rgba(167,139,250,.12);--lbo:rgba(167,139,250,.22)">
+      <div class="ctop"><div class="logo">🐙</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">บ้านของทุก Code Project</div>
+        <div class="cname">GitHub</div>
+        <div class="cdesc">เก็บ code version control collaborate กับทีม ดู open-source มี Copilot ช่วยเขียนโค้ด CI/CD Actions และ host static website ฟรีด้วย GitHub Pages</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Repo Storage</div><div class="info-val">แนะนำ 1GB/repo<br>Hard limit 100GB</div></div>
+        <div class="info-box"><div class="info-lbl">Actions (CI/CD)</div><div class="info-val">2,000 min/เดือน <small>(Free)</small><br>3,000 min <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Private Repos</div><div class="info-val">ไม่จำกัด <small>(ทุกแผน)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Code Retention</div><div class="info-val">ถาวร ตราบ repo ยังอยู่<br><small>Deleted: เรียกคืนได้ 90 วัน</small></div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">Private repos ไม่จำกัด · 2K CI min/เดือน</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro</div><div class="plan-note">3K CI min · Pages ส่วนตัว · Advanced tools</div></div><div class="plan-price">$4/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Copilot Pro</div><div class="plan-note">AI code completion + chat in IDE</div></div><div class="plan-price">$10/เดือน</div></div>
+          <div class="plan-row"><div><div class="plan-name">Team</div><div class="plan-note">Organization + team management</div></div><div class="plan-price">$4/ที่นั่ง/เดือน</div></div>
         </div>
-        <div class="tool-tagline">All-in-One Workspace</div>
-        <div class="tool-name">Notion</div>
-        <div class="tool-desc">จดโน้ต สร้าง Wiki ทำ Database จัดการโปรเจกต์ และทำงานทีมในที่เดียว มี AI ช่วยเขียนและสรุป Sync ทุกอุปกรณ์ ยืดหยุ่นและ customizable มาก</div>
-        <div class="tool-features">
-          <span class="feat-tag">Database</span>
-          <span class="feat-tag">Wiki</span>
-          <span class="feat-tag">Kanban</span>
-          <span class="feat-tag">AI Writing</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">notion.so</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
+      </div>
+      <div class="feats"><span class="ft">Git</span><span class="ft">Copilot</span><span class="ft">Actions CI/CD</span><span class="ft">Pages</span><span class="ft">Codespaces</span><span class="ft">Security Scan</span></div>
+      <div class="data-note">📦 Code เก็บถาวร · CI Artifacts ลบหลัง 90 วัน (Free) · Deleted repos เรียกคืนได้ 90 วัน</div>
+      <div class="cfoot"><span class="curl">github.com</span><div class="arr">↗</div></div>
+    </a>
 
-      <a class="tool-card" href="https://obsidian.md" target="_blank" style="--card-accent:#7c6fff;--logo-bg:rgba(124,111,255,0.12);--logo-border:rgba(124,111,255,0.25)">
-        <div class="card-top">
-          <div class="tool-logo">💎</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
+    <a class="card" href="https://codepen.io" target="_blank" style="--ca:#00d4a8;--lb:rgba(0,212,168,.1);--lbo:rgba(0,212,168,.2)">
+      <div class="ctop"><div class="logo">🖊️</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">HTML/CSS/JS Sandbox · No Setup</div>
+        <div class="cname">CodePen</div>
+        <div class="cdesc">เขียน HTML CSS JS แล้วเห็นผลทันทีในเบราว์เซอร์ ไม่ต้องตั้ง environment ทดลอง prototype แชร์ snippet หา inspiration จาก community</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">Public Pens</div><div class="info-val">ไม่จำกัด <small>(ทุกแผน)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Private Pens</div><div class="info-val">ไม่มี <small>(Free)</small><br>ไม่จำกัด <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">Asset Upload</div><div class="info-val">ไม่มี <small>(Free)</small><br>10MB/ไฟล์ <small>(Pro)</small></div></div>
+        <div class="info-box"><div class="info-lbl">เก็บโค้ด</div><div class="info-val">ถาวร ตราบ account ยังอยู่</div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">Public pens ไม่จำกัด · Community access</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Pro</div><div class="plan-note">Private · Asset upload · Collab Mode</div></div><div class="plan-price">$8/เดือน</div></div>
         </div>
-        <div class="tool-tagline">Second Brain ส่วนตัว</div>
-        <div class="tool-name">Obsidian</div>
-        <div class="tool-desc">จดโน้ตแบบ Markdown เก็บข้อมูลในเครื่องตัวเอง (ไม่ต้องส่งขึ้น cloud) เชื่อมโยงโน้ตด้วย Graph View เหมาะสำหรับ Personal Knowledge Management</div>
-        <div class="tool-features">
-          <span class="feat-tag">Local First</span>
-          <span class="feat-tag">Graph View</span>
-          <span class="feat-tag">Markdown</span>
-          <span class="feat-tag">Plugin</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">obsidian.md</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
+      </div>
+      <div class="feats"><span class="ft">Live Preview</span><span class="ft">Snippet</span><span class="ft">Community</span><span class="ft">React/Vue</span><span class="ft">Templates</span></div>
+      <div class="data-note">📦 Pens เก็บถาวร · Public pens ถูก index โดย Google · Export เป็น zip ได้</div>
+      <div class="cfoot"><span class="curl">codepen.io</span><div class="arr">↗</div></div>
+    </a>
 
-      <a class="tool-card" href="https://todoist.com" target="_blank" style="--card-accent:#ff6b9d;--logo-bg:rgba(255,107,157,0.1);--logo-border:rgba(255,107,157,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">✅</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
-        </div>
-        <div class="tool-tagline">Task Manager ที่ดีที่สุด</div>
-        <div class="tool-name">Todoist</div>
-        <div class="tool-desc">จัดการ to-do list และ task ที่ดีที่สุด ตั้ง Priority กำหนดวันเดดไลน์ ทำ subtask ดู productivity report และ sync กับ Calendar ได้ทุกอุปกรณ์</div>
-        <div class="tool-features">
-          <span class="feat-tag">Priority</span>
-          <span class="feat-tag">Deadline</span>
-          <span class="feat-tag">Report</span>
-          <span class="feat-tag">Calendar</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">todoist.com</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
-
-    </div>
   </div>
+</div>
 
-  <!-- FILE & UTILITIES -->
-  <div class="category" data-cat="file">
-    <div class="cat-header">
-      <span class="cat-icon">📁</span>
-      <span class="cat-name">ไฟล์ & ยูทิลิตี</span>
-      <div class="cat-line"></div>
-      <span class="cat-count">4 tools</span>
-    </div>
-    <div class="tools-grid">
+<!-- SECURITY -->
+<div class="cat" data-cat="security">
+  <div class="cat-hd"><span style="font-size:16px">🔒</span><span class="cat-nm">ความปลอดภัย & Privacy</span><div class="cat-ln"></div><span class="cat-ct">1 tool</span></div>
+  <div class="grid">
 
-      <a class="tool-card" href="https://smallpdf.com" target="_blank" style="--card-accent:#ff6b9d;--logo-bg:rgba(255,107,157,0.1);--logo-border:rgba(255,107,157,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">📄</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
+    <a class="card" href="https://bitwarden.com" target="_blank" style="--ca:#00d4a8;--lb:rgba(0,212,168,.1);--lbo:rgba(0,212,168,.2)">
+      <div class="ctop"><div class="logo">🔑</div><div class="badges"><span class="badge bfm">Freemium</span></div></div>
+      <div class="cbody">
+        <div class="tagline">Open-Source Password Manager</div>
+        <div class="cname">Bitwarden</div>
+        <div class="cdesc">จัดเก็บรหัสผ่านทุกเว็บอย่างปลอดภัย open-source ตรวจสอบโดยสาธารณะ E2E Encrypted สร้างรหัสผ่านยากอัตโนมัติ Auto-fill ทุก browser Sync ทุกอุปกรณ์ ฟรีไม่อั้น</div>
+      </div>
+      <div class="info-grid">
+        <div class="info-box"><div class="info-lbl">การเข้ารหัส</div><div class="info-val">AES-256-bit<br>End-to-End Encrypted</div></div>
+        <div class="info-box"><div class="info-lbl">Devices</div><div class="info-val">ไม่จำกัด <small>(Free)</small><br>Sync ทุกอุปกรณ์</div></div>
+        <div class="info-box"><div class="info-lbl">เก็บข้อมูล</div><div class="info-val">Cloud หรือ Self-host<br><small>ถาวร ตราบ account อยู่</small></div></div>
+        <div class="info-box"><div class="info-lbl">2FA</div><div class="info-val">TOTP, Email (Free)<br>YubiKey, Duo (Pro)</div></div>
+      </div>
+      <div class="plans-wrap">
+        <div class="plans-lbl">แผนราคา</div>
+        <div class="plans">
+          <div class="plan-row"><div><div class="plan-name">Free</div><div class="plan-note">ไม่จำกัด passwords · ทุกอุปกรณ์ · 2FA basic</div></div><div class="plan-price">ฟรี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Premium</div><div class="plan-note">1GB file attach · Advanced 2FA · Health report</div></div><div class="plan-price">$10/ปี</div></div>
+          <div class="plan-row"><div><div class="plan-name">Family</div><div class="plan-note">6 users · Share passwords ครอบครัว</div></div><div class="plan-price">$40/ปี</div></div>
         </div>
-        <div class="tool-tagline">PDF ทำได้ทุกอย่าง</div>
-        <div class="tool-name">Smallpdf</div>
-        <div class="tool-desc">จัดการ PDF ครบจบในที่เดียว รวม ตัด แปลง บีบอัด เซ็น ล็อค PDF แปลง Word/Excel/PPT เป็น PDF และกลับกัน ไม่ต้องติดตั้ง ใช้งานบนเว็บได้เลย</div>
-        <div class="tool-features">
-          <span class="feat-tag">Merge</span>
-          <span class="feat-tag">Compress</span>
-          <span class="feat-tag">Convert</span>
-          <span class="feat-tag">eSign</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">smallpdf.com</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
+      </div>
+      <div class="feats"><span class="ft">Open Source</span><span class="ft">E2E Encrypt</span><span class="ft">Auto-fill</span><span class="ft">Generator</span><span class="ft">Self-host</span><span class="ft">Passkey</span></div>
+      <div class="data-note">📦 ข้อมูลเข้ารหัส E2E ก่อนออกจากเครื่อง · Bitwarden อ่านรหัสผ่านของคุณไม่ได้ · เก็บถาวร</div>
+      <div class="cfoot"><span class="curl">bitwarden.com</span><div class="arr">↗</div></div>
+    </a>
 
-      <a class="tool-card" href="https://squoosh.app" target="_blank" style="--card-accent:#00d9b1;--logo-bg:rgba(0,217,177,0.1);--logo-border:rgba(0,217,177,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">🖼️</div>
-          <div class="tool-badges"><span class="badge badge-free">ฟรี</span></div>
-        </div>
-        <div class="tool-tagline">บีบอัดรูปโดย Google</div>
-        <div class="tool-name">Squoosh</div>
-        <div class="tool-desc">บีบอัดรูปภาพออนไลน์โดย Google ไม่ต้องส่งไฟล์ไปเซิร์ฟเวอร์ ประมวลผลในเครื่อง 100% รองรับ WebP, AVIF, PNG, JPEG เห็นผลก่อน-หลังแบบ real-time</div>
-        <div class="tool-features">
-          <span class="feat-tag">No Upload</span>
-          <span class="feat-tag">WebP</span>
-          <span class="feat-tag">AVIF</span>
-          <span class="feat-tag">By Google</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">squoosh.app</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
-
-      <a class="tool-card" href="https://wetransfer.com" target="_blank" style="--card-accent:#4fc3f7;--logo-bg:rgba(79,195,247,0.1);--logo-border:rgba(79,195,247,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">📦</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
-        </div>
-        <div class="tool-tagline">ส่งไฟล์ใหญ่ไม่ง้อ Email</div>
-        <div class="tool-name">WeTransfer</div>
-        <div class="tool-desc">ส่งไฟล์ขนาดใหญ่สูงสุด 2GB ฟรีโดยไม่ต้องสมัครสมาชิก แค่อัปโหลดแล้วแชร์ link ได้เลย เก็บไฟล์ไว้ 7 วัน เหมาะสำหรับส่งงานหนักที่ email รับไม่ได้</div>
-        <div class="tool-features">
-          <span class="feat-tag">2GB ฟรี</span>
-          <span class="feat-tag">ไม่ต้องสมัคร</span>
-          <span class="feat-tag">Link แชร์</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">wetransfer.com</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
-
-      <a class="tool-card" href="https://www.wolframalpha.com" target="_blank" style="--card-accent:#ffb347;--logo-bg:rgba(255,179,71,0.1);--logo-border:rgba(255,179,71,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">🔢</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
-        </div>
-        <div class="tool-tagline">คำนวณสิ่งที่ Google ทำไม่ได้</div>
-        <div class="tool-name">Wolfram Alpha</div>
-        <div class="tool-desc">เครื่องคิดเลข AI ระดับเทพ คำนวณคณิตศาสตร์ สถิติ ฟิสิกส์ เคมี ดูกราฟ หาข้อมูลวิทยาศาสตร์ แปลงหน่วย ดูข้อมูลโภชนาการ ฯลฯ ครอบคลุมมาก</div>
-        <div class="tool-features">
-          <span class="feat-tag">Math</span>
-          <span class="feat-tag">Physics</span>
-          <span class="feat-tag">Graph</span>
-          <span class="feat-tag">Data</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">wolframalpha.com</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
-
-    </div>
   </div>
+</div>
 
-  <!-- DEV -->
-  <div class="category" data-cat="dev">
-    <div class="cat-header">
-      <span class="cat-icon">💻</span>
-      <span class="cat-name">Developer Tools</span>
-      <div class="cat-line"></div>
-      <span class="cat-count">2 tools</span>
-    </div>
-    <div class="tools-grid">
-
-      <a class="tool-card" href="https://github.com" target="_blank" style="--card-accent:#7c6fff;--logo-bg:rgba(124,111,255,0.12);--logo-border:rgba(124,111,255,0.25)">
-        <div class="card-top">
-          <div class="tool-logo">🐙</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
-        </div>
-        <div class="tool-tagline">บ้านของทุก Project</div>
-        <div class="tool-name">GitHub</div>
-        <div class="tool-desc">เก็บ code, version control, collaborate กับทีม ดู open-source project มี GitHub Copilot ช่วยเขียนโค้ด CI/CD และ host static website ฟรี (GitHub Pages)</div>
-        <div class="tool-features">
-          <span class="feat-tag">Git</span>
-          <span class="feat-tag">Copilot</span>
-          <span class="feat-tag">CI/CD</span>
-          <span class="feat-tag">Pages</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">github.com</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
-
-      <a class="tool-card" href="https://codepen.io" target="_blank" style="--card-accent:#00d9b1;--logo-bg:rgba(0,217,177,0.1);--logo-border:rgba(0,217,177,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">🖊️</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
-        </div>
-        <div class="tool-tagline">Sandbox HTML/CSS/JS</div>
-        <div class="tool-name">CodePen</div>
-        <div class="tool-desc">เขียน HTML CSS JS แล้วเห็นผลทันที ไม่ต้องตั้ง environment หา inspiration จาก community ใช้ทดลอง prototype หรือแชร์ code snippet ได้เลย</div>
-        <div class="tool-features">
-          <span class="feat-tag">Live Preview</span>
-          <span class="feat-tag">Snippet</span>
-          <span class="feat-tag">Community</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">codepen.io</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
-
-    </div>
-  </div>
-
-  <!-- SECURITY -->
-  <div class="category" data-cat="security">
-    <div class="cat-header">
-      <span class="cat-icon">🔒</span>
-      <span class="cat-name">ความปลอดภัย & Privacy</span>
-      <div class="cat-line"></div>
-      <span class="cat-count">1 tool</span>
-    </div>
-    <div class="tools-grid">
-
-      <a class="tool-card" href="https://bitwarden.com" target="_blank" style="--card-accent:#00d9b1;--logo-bg:rgba(0,217,177,0.1);--logo-border:rgba(0,217,177,0.2)">
-        <div class="card-top">
-          <div class="tool-logo">🔑</div>
-          <div class="tool-badges"><span class="badge badge-freemium">Freemium</span></div>
-        </div>
-        <div class="tool-tagline">ลืมรหัสผ่านได้เลย</div>
-        <div class="tool-name">Bitwarden</div>
-        <div class="tool-desc">จัดเก็บรหัสผ่านทุกเว็บอย่างปลอดภัย open-source ตรวจสอบโดยสาธารณะ สร้างรหัสผ่านยากอัตโนมัติ Auto-fill ใน browser Sync ทุกอุปกรณ์ ฟรีไม่อั้น</div>
-        <div class="tool-features">
-          <span class="feat-tag">Open Source</span>
-          <span class="feat-tag">Auto-fill</span>
-          <span class="feat-tag">Generator</span>
-          <span class="feat-tag">E2E Encrypt</span>
-        </div>
-        <div class="card-footer">
-          <span class="tool-url">bitwarden.com</span>
-          <div class="arrow">↗</div>
-        </div>
-      </a>
-
-    </div>
-  </div>
-
-  <footer>
-    สร้างด้วย <span>♥</span> — My Digital Toolkit 2025 &nbsp;·&nbsp; คลิกการ์ดเพื่อเปิดเว็บ
-  </footer>
-
+<footer>
+  <span>♥</span> My Digital Toolkit 2025 &nbsp;·&nbsp; ราคาอาจเปลี่ยนแปลง ตรวจสอบที่เว็บอย่างเป็นทางการเสมอ &nbsp;·&nbsp; คลิกการ์ดเพื่อเปิดเว็บ
+</footer>
 </div>
 
 <script>
-function filterCat(cat) {
-  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
-  event.target.classList.add('active');
-
-  document.querySelectorAll('.category').forEach(c => {
-    if (cat === 'all' || c.dataset.cat === cat) {
-      c.classList.remove('hidden');
-    } else {
-      c.classList.add('hidden');
-    }
+function fc(cat, btn) {
+  document.querySelectorAll('.fb').forEach(b => b.classList.remove('on'));
+  btn.classList.add('on');
+  document.querySelectorAll('.cat').forEach(c => {
+    c.classList.toggle('hidden', cat !== 'all' && c.dataset.cat !== cat);
   });
 }
-
-// stagger card animations
-document.querySelectorAll('.tool-card').forEach((card, i) => {
-  card.style.animationDelay = (i * 0.05) + 's';
-});
+document.querySelectorAll('.card').forEach((c,i) => { c.style.animationDelay = (i * 0.04) + 's'; });
 </script>
 </body>
 </html>
+
